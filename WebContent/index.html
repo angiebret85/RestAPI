@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Prise de notes</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/4-col-portfolio.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<body class="container">
+
+	<div class="jumbotron">
+    	<h1>Prise de notes</h1>
+	</div>
+
+    <div id="notes" class="row">
+    
+    	<div class="col-md-4">
+			<div class="card">
+				<div class="card-header">
+					<h3>Nouvelle note</h3>
+				</div>
+				<div class="card-body">
+					<textarea id="txtNewCard" class="col-12"></textarea>
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-success" onclick="ajouterNote()">Ajouter</button>
+				</div>
+			</div>
+		</div>
+
+	</div>		
+	<script type="text/javascript">
+	function createXHR() {
+	    if (window.XMLHttpRequest)    //  Objet standard
+	    {
+	        xhr = new XMLHttpRequest();     //  Firefox, Safari, ...
+	    }
+	    else if (window.ActiveXObject)      //  Internet Explorer
+	    {
+	        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+	    }
+	    
+	    xhr.onreadystatechange = function()
+	    {
+	        if (xhr.readyState == 4)
+	        {
+	            if (xhr.status == 200)
+	            {
+	            	succes(xhr.responseText);//xhr.responseXML si réponse au format XML
+	            }
+	            else
+	            {
+	                echec(xhr.status, xhr.responseText);
+	            }
+	        }
+	    };
+	    return xhr;
+	}
+
+	function ajouter()
+	{
+	    var xhr = createXHR();
+	    var contenu = $("#txtNewCard").val();
+
+		datasFormulaire = "nom="+encodeURIComponent(contenu);
+	    
+	    xhr.open("POST", "/TPNotes/rest/notes", true);
+	    xhr.setRequestHeader("Accept","application/json");
+	    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	    xhr.send(datasFormulaire);
+	}
+	</script>
+	
+	<!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notes.js"></script>
+</body>
+</html>
